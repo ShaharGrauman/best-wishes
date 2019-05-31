@@ -1,0 +1,101 @@
+{
+  "users": [
+    {
+      "id": "a3c66333-9016-42a9-a5d2-fa432bda0519",
+      "username": "shahar",
+      "email": "shahar@email.com",
+      "password": "123456"
+    },
+    {
+      "id": "bbcd7008-9016-42a9-a5d2-fa432bda0519",
+      "username": "yusuf",
+      "email": "yusuf@email.com",
+      "password": "123456"
+    }
+  ],
+  "events": [
+    {
+      "id": "11166333-9016-42a9-a5d2-fa432bda0519",
+      "userId": "a3c66333-9016-42a9-a5d2-fa432bda0519",
+      "title": "My Birthdate Party",
+      "category": 1,
+      "startDate": "11-19-2018 19:00",
+      "endDate": "11-19-2018 23:00",
+      "location": "Tel Aviv",
+      "wishes": [
+        {
+          "id": "22266333-9016-42a9-a5d2-fa432bda0519",
+          "userId": "00000000-0000-0000-0000-000000000000",
+          "from": "Lucie",
+          "body": "Congrads! May all you want be fullfilled",
+          "image": "https://media.giphy.com/media/xT0BKqhdlKCxCNsVTq/giphy.gif"
+        },
+        {
+          "id": "33366333-9016-42a9-a5d2-fa432bda0519",
+          "userId": "bbcd7008-9016-42a9-a5d2-fa432bda0519",
+          "from": "Yusuf",
+          "body": "Wow bro, happy birthday!",
+          "image": "https://www.shutterfly.com/ideas/wp-content/uploads/2016/08/50-happy-birthday-quotes-thumb.jpg"
+        }
+      ]
+    },
+    {
+      "id": "aaa66333-9016-42a9-a5d2-fa432bda0519",
+      "userId": "a3c66333-9016-42a9-a5d2-fa432bda0519",
+      "title": "Celebrate Bar Mitzva",
+      "category": 5,
+      "startDate": "11-19-2018 19:00",
+      "endDate": "11-19-2018 23:00",
+      "location": "Haifa",
+      "wishes": [
+        {
+          "id": "44466333-9016-42a9-a5d2-fa432bda0519",
+          "userId": "00000000-0000-0000-0000-000000000000",
+          "from": "Guri",
+          "body": "Cut the bullshit!",
+          "image": "https://media.giphy.com/media/xT0BKqhdlKCxCNsVTq/giphy.gif"
+        }
+      ]
+    },
+    {
+      "id": "abc66333-9016-42a9-a5d2-fa432bda0519",
+      "userId": "bbcd7008-9016-42a9-a5d2-fa432bda0519",
+      "title": "Baby Smile",
+      "category": 3,
+      "startDate": "7-04-2018 20:30",
+      "endDate": "07-04-2018 22:30",
+      "location": "Nazareth",
+      "wishes": [
+        {
+          "id": "55566333-9016-42a9-a5d2-fa432bda0519",
+          "userId": "00000000-0000-0000-0000-000000000000",
+          "from": "Guri",
+          "body": "Cut the bullshit!",
+          "image": "https://media.giphy.com/media/xT0BKqhdlKCxCNsVTq/giphy.gif"
+        }
+      ]
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "name": "Birthdate"
+    },
+    {
+      "id": 2,
+      "name": "Wedding"
+    },
+    {
+      "id": 3,
+      "name": "New Born"
+    },
+    {
+      "id": 4,
+      "name": "LAN Party"
+    },
+    {
+      "name": "Bar Mitzva",
+      "id": 5
+    }
+  ]
+}
