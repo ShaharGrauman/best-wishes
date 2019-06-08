@@ -1,13 +1,13 @@
 
 const { initServer, initDB } = require("./init");
 
-const server = initServer();
+const { server, router } = initServer();
 const db = initDB();
 
 
 const { routing } = require('./routing');
 
-routing(server, db);
+routing(server, db, router);
 
 
 server.listen(3080, () => console.log("SERVER is running on port 3080"));

@@ -6,12 +6,13 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 
 const initServer = () => {
-    const server = express();
+    const server = express(),
+          router = express.Router();
 
     server.use(bodyParser.json());
     server.use(cors());
 
-    return server;
+    return { server, router };
 }
 
 const initDB = () => {
