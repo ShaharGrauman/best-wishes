@@ -12,17 +12,24 @@ const userScheme = yup.object().shape({
     password: yup.string().matches(/\w{6,}$/).required()
 });
 
+const eventScheme = yup.object().shape({
+    title: yup.string().min(2).required(),
+    category: yup.number().required(),
+    startDate: yup.date().required(),
+    endDate: yup.date().when('startDate', (st, schema) => {
+        return yup.date().min(st);
+    }),
+    location: yup.string().min(2).required()
+});
 
-const validateLogin = async user => {
-    return await loginScheme.isValid(user);
-}
+const validateLogin = async user => await loginScheme.isValid(user);
 
+const validateNewUser = async user => await userScheme.isValid(user);
 
-const validateNewUser = async user => {
-    return await userScheme.isValid(user);
-}
+const validateEvent = async event => await eventScheme.isValid(event); 
 
 module.exports = {
     validateLogin,
-    validateNewUser
+    validateNewUser,
+    validateEvent
 }

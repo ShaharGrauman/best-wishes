@@ -1,7 +1,11 @@
 const uuid = require("uuid/v4");
 
 const { anonymous, auth } = require("./middlewares");
-const { validateNewUser, validateLogin } = require("./validators");
+const {
+  validateNewUser,
+  validateLogin,
+  validateEvent
+} = require("./validators");
 
 let server, db, router;
 
@@ -18,10 +22,9 @@ const routing = (srv, database, router) => {
 
   router.get("/user/my-events", myEvents);
 
-  server.use("/", router);
-  // auth(server);
+  router.post("/user/new-event", createEvent);
 
-  // myEvents();
+  server.use("/", router);
 };
 
 const login = async (req, res, next) => {
@@ -38,6 +41,7 @@ const login = async (req, res, next) => {
       },
       error: "Invalid data"
     });
+    return;
   }
   try {
     const user = db
@@ -64,11 +68,12 @@ const login = async (req, res, next) => {
 };
 
 const register = async (req, res, next) => {
+  const { username, email, password } = req.body;
   const newUser = {
     id: uuid(),
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password
+    username,
+    email,
+    password
   };
 
   const valid = await validateNewUser(newUser);
@@ -80,14 +85,15 @@ const register = async (req, res, next) => {
       },
       error: "Invalid data"
     });
+    return;
   }
 
-  const user = db
+  const users = db
     .get("users")
     .push(newUser)
     .write();
 
-  if (!user) {
+  if (!users) {
     res.json({
       status: {
         code: 500
@@ -99,7 +105,7 @@ const register = async (req, res, next) => {
       status: {
         code: 200
       },
-      userId: user[0].id
+      userId: users[users.length-1].id
     });
   }
 };
@@ -118,6 +124,55 @@ const myEvents = (req, res, next) => {
     .filter({ userId: req.userId })
     .value();
   res.json(events);
+};
+
+const createEvent = async (req, res, next) => {
+  const { title, category, startDate, endDate, location } = req.body;
+
+  const newEvent = {
+    id: uuid(),
+    userId: req.userId,
+    title,
+    category, 
+    startDate, 
+    endDate, 
+    location
+  };
+
+  const valid = await validateEvent(newEvent);
+
+  if (!valid) {
+    res.json({
+      status: {
+        code: 400
+      },
+      error: "Invalid data"
+    });
+    return;
+  }
+
+  newEvent.wishes = [];
+
+  const events = db
+    .get("events")
+    .push(newEvent)
+    .write();
+
+  if (!events) {
+    res.json({
+      status: {
+        code: 500
+      },
+      error: "Internal server error"
+    });
+  } else {
+    res.json({
+      status: {
+        code: 200
+      },
+      eventId: events[events.length-1].id
+    });
+  }
 };
 
 module.exports = {

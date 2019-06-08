@@ -74,6 +74,16 @@
           "image": "https://media.giphy.com/media/xT0BKqhdlKCxCNsVTq/giphy.gif"
         }
       ]
+    },
+    {
+      "id": "908e7958-d557-44bb-8b5c-77c601d7d32c",
+      "userId": "bbcd7008-9016-42a9-a5d2-fa432bda0519",
+      "title": "DOOM LAN Party",
+      "category": 4,
+      "startDate": "08-05-2018 19:00",
+      "endDate": "08-06-2018 12:00",
+      "location": "Netanya",
+      "wishes": []
     }
   ],
   "categories": [
