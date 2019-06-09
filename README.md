@@ -4,10 +4,13 @@
 ### No Authentication is required for the following endpoints:
 
 **POST /login**
+
+```json
 {
     email, 
     password (min 6 chars)
 }
+```
 
 **POST /register**
 {
