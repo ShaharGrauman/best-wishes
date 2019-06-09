@@ -18,6 +18,7 @@
     email, 
     password  //(min 6 chars)
 }
+```
 
 **GET /event/id**
 
