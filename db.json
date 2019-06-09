@@ -83,7 +83,29 @@
       "startDate": "08-05-2018 19:00",
       "endDate": "08-06-2018 12:00",
       "location": "Netanya",
-      "wishes": []
+      "wishes": [
+        {
+          "id": "ae993d0a-0bd5-4925-9af3-dbf6a00d08b0",
+          "userId": "00000000-0000-0000-0000-000000000000",
+          "from": "Mundo",
+          "body": "Hi!! Happy whatever.",
+          "image": "https://media.giphy.com/media/xT0BKqhdlKCxCNsVTq/giphy.gif"
+        },
+        {
+          "id": "a0117a9d-d070-4e7b-b6a9-7d2a806ee852",
+          "userId": "00000000-0000-0000-0000-000000000000",
+          "from": "Lala",
+          "body": "YEEAAA Happy whatever.",
+          "image": "https://media.giphy.com/media/xT0BKqhdlKCxCNsVTq/giphy.gif"
+        },
+        {
+          "id": "4b4bd09b-cd3f-46b4-b9b9-497d576d276d",
+          "userId": "bbcd7008-9016-42a9-a5d2-fa432bda0519",
+          "from": "Lala",
+          "body": "YEEAAA Happy whatever.",
+          "image": "https://media.giphy.com/media/xT0BKqhdlKCxCNsVTq/giphy.gif"
+        }
+      ]
     }
   ],
   "categories": [

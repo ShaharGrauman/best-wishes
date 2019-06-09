@@ -20,8 +20,16 @@
 }
 ```
 
-**GET /event/id**
+**GET /event/<id>**
 
+**POST /new-wish/<eventId>**
+```javascript
+{
+    from, //(min 2 chars)
+    body, //(min 2 chars)
+    image //(not required)
+}
+```
 
 ### Authentication is required for the following endpoints:
 
@@ -38,5 +46,14 @@
     startDate, //(date, like "08-05-2018 19:00")
     endDate,   //(date, later than startDate),
     location   //(min 2 chars)
+}
+```
+
+**POST /user/new-wish/<eventId>**
+```javascript
+{
+    from, //(min 2 chars)
+    body, //(min 2 chars)
+    image //(not required)
 }
 ```

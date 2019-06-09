@@ -4,7 +4,8 @@ const { anonymous, auth } = require("./middlewares");
 const {
   validateNewUser,
   validateLogin,
-  validateEvent
+  validateEvent,
+  validateWish
 } = require("./validators");
 
 let server, db, router;
@@ -18,11 +19,15 @@ const routing = (srv, database, router) => {
 
   router.get("/event/:id", event);
 
+  router.post("/new-wish/:eventId", createWish);
+
   router.use("/user", auth);
 
   router.get("/user/my-events", myEvents);
 
   router.post("/user/new-event", createEvent);
+
+  router.post("/user/new-wish/:eventId", createWish);
 
   server.use("/", router);
 };
@@ -105,7 +110,7 @@ const register = async (req, res, next) => {
       status: {
         code: 200
       },
-      userId: users[users.length-1].id
+      userId: users[users.length - 1].id
     });
   }
 };
@@ -133,9 +138,9 @@ const createEvent = async (req, res, next) => {
     id: uuid(),
     userId: req.userId,
     title,
-    category, 
-    startDate, 
-    endDate, 
+    category,
+    startDate,
+    endDate,
     location
   };
 
@@ -170,7 +175,81 @@ const createEvent = async (req, res, next) => {
       status: {
         code: 200
       },
-      eventId: events[events.length-1].id
+      eventId: events[events.length - 1].id
+    });
+  }
+};
+
+const createWish = async (req, res, next) => {
+  const { eventId } = req.params;
+
+  if (!eventId) {
+    res.json({
+      status: {
+        code: 400
+      },
+      error: "Event id was not supplied"
+    });
+    return;
+  }
+
+  const event = db
+    .get("events")
+    .find({ id: eventId })
+    .value();
+
+  if (!event) {
+    res.json({
+      status: {
+        code: 404
+      },
+      error: 'No such event'
+    });
+    return;
+  }
+
+  const { from, body, image } = req.body;
+
+  const newWish = {
+    id: uuid(),
+    userId: req.userId || "00000000-0000-0000-0000-000000000000",
+    from,
+    body,
+    image
+  };
+
+  const valid = await validateWish(newWish);
+
+  if (!valid) {
+    res.json({
+      status: {
+        code: 400
+      },
+      error: "Invalid data"
+    });
+    return;
+  }
+
+  const wishes = db
+    .get("events")
+    .find({id: eventId})
+    .get('wishes')
+    .push(newWish)
+    .write();
+
+  if (!event) {
+    res.json({
+      status: {
+        code: 500
+      },
+      error: "Internal server error"
+    });
+  } else {
+    res.json({
+      status: {
+        code: 200
+      },
+      wishId: wishes[wishes.length - 1].id
     });
   }
 };
