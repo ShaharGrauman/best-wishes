@@ -57,3 +57,16 @@
     image //(not required)
 }
 ```
+
+**PUT /user/event/<eventId>**
+Notice you don't have to send all fields, just the modified
+
+```javascript
+{
+    title,     //(min 2 chars),
+    category,  //(number),
+    startDate, //(date, like "08-05-2018 19:00")
+    endDate,   //(date, later than startDate),
+    location   //(min 2 chars)
+}
+```
