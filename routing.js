@@ -29,6 +29,8 @@ const routing = (srv, database, router) => {
 
   router.post("/user/new-wish/:eventId", createWish);
 
+  router.put("/user/event/:eventId", editEvent);
+
   server.use("/", router);
 };
 
@@ -203,7 +205,7 @@ const createWish = async (req, res, next) => {
       status: {
         code: 404
       },
-      error: 'No such event'
+      error: "No such event"
     });
     return;
   }
@@ -232,8 +234,8 @@ const createWish = async (req, res, next) => {
 
   const wishes = db
     .get("events")
-    .find({id: eventId})
-    .get('wishes')
+    .find({ id: eventId })
+    .get("wishes")
     .push(newWish)
     .write();
 
@@ -250,6 +252,75 @@ const createWish = async (req, res, next) => {
         code: 200
       },
       wishId: wishes[wishes.length - 1].id
+    });
+  }
+};
+
+const editEvent = async (req, res, next) => {
+  const eventId = req.params.eventId;
+
+  if (!eventId) {
+    res.json({
+      status: {
+        code: 400
+      },
+      error: "Invalid data - missing event indentifier"
+    });
+    return;
+  }
+
+  let event = db
+    .get("events")
+    .find({ id: eventId })
+    .value();
+
+  const { title, category, startDate, endDate, location } = req.body;
+
+  const updatedEvent = { ...event };
+
+  if (title !== undefined) updatedEvent.title = title;
+  if (category !== undefined) updatedEvent.category = category;
+  if (startDate !== undefined) updatedEvent.startDate = startDate;
+  if (endDate !== undefined) updatedEvent.endDate = endDate;
+  if (location !== undefined) updatedEvent.location = location;
+
+  const valid = await validateEvent(updatedEvent);
+
+  console.log('valid', valid);
+
+  if (!valid) {
+    res.json({
+      status: {
+        code: 400
+      },
+      error: "Invalid data"
+    });
+    return;
+  }
+
+  console.log('found event', event);
+
+  event = db
+    .get("events")
+    .find({id:eventId})
+    .assign(updatedEvent)
+    .write();
+
+  console.log('found event', event);
+
+  if (!event) {
+    res.json({
+      status: {
+        code: 500
+      },
+      error: "Internal server error"
+    });
+  } else {
+    res.json({
+      status: {
+        code: 200
+      },
+      eventId: eventId
     });
   }
 };
